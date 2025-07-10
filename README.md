@@ -1,6 +1,8 @@
 # Welcome to Choccer!
 The game was created by Nataly Lavender and programmed by Lily Kaplan.
 
+NOTE: THIS README IS A WORK IN PROGRESS
+
 ![the starting board layout](/resources/starting%20board.png)
 
 # Objective
