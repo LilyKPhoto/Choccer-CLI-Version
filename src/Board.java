@@ -202,7 +202,7 @@ public class Board
      * @param i an int to convert to a char
      * @return int + 65, casted to a char (0 -> A, 1 -> B, etc)
      */
-    public int intToChar(int i)
+    public char intToChar(int i)
     {
         return (char)(i + 65);
     }
