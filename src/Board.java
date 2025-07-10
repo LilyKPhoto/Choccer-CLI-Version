@@ -7,6 +7,7 @@
  * Full game rules can be found in the README.
  */
 
+// TODO: change either the rows or columns to be letters instead of numbers
 public class Board
 {
     // board is 11 spaces wide by 7 spaces high (11x7), so max values should be 10 and 6 
@@ -38,6 +39,8 @@ public class Board
 
     public Board() {
         initializeGameBoard();
+        this.player1Name = DEFAULT_PLAYER_1_NAME;
+        this.player2Name = DEFAULT_PLAYER_2_NAME;
     }
 
     public Board(String p1, String p2)
@@ -410,16 +413,22 @@ public class Board
     {
         /*
         * General Idea:
+        * 0. Check if target piece is a Gem (turns out not including this check results in a bug)
         * 1. Check if target piece is the same color
         * 2. Check if target piece is in range (2 tiles in any direction)
-        * 3. Move the Gem in the heldGemPositions array to the new position
-        * 4. Remove the Gem from the old position
-        * 5. Set the original piece's isHoldingGem flag to false
-        * 6. Set the new piece's isHoldingGem flag to true
-        * 7. Move to next turn.
+        * 3. Check if target piece is holding a gem already (I forgot about this one initially)
+        * 4. Move the Gem in the heldGemPositions array to the new position
+        * 5. Remove the Gem from the old position
+        * 6. Set the original piece's isHoldingGem flag to false
+        * 7. Set the new piece's isHoldingGem flag to true
+        * 8. Move to next turn.
         */
         boolean validMovePerformed = false; // default to no valid move being performed, gets overridden if a valid move gets performed
-        if(gameBoard[fromY][fromX].getColor() == gameBoard[toY][toX].getColor()) // 1.
+        if(gameBoard[toY][toX] instanceof GemPiece) // 0.
+        {
+            System.out.println("You can't pass a gem to another gem!");
+        }
+        else if(gameBoard[fromY][fromX].getColor() == gameBoard[toY][toX].getColor()) // 1.
         {
             // create difference variables for the difference in x/y positions - used for validity checking
             int dx = Math.abs(toX - fromX);
@@ -427,24 +436,28 @@ public class Board
 
             if(dx > 2 || dy > 2) // 2.
             {
-                System.out.println("Error: target piece is out of range.");
+                System.out.println("Target piece is out of range.");
+            }
+            else if (gameBoard[toY][toX].getHoldingGem()) // 3.
+            {
+                System.out.println("Target piece already has a gem!");
             }
             else
             {
-                heldGemPositions[toY][toX] = heldGemPositions[fromY][fromX]; // 3.
-                heldGemPositions[fromY][fromX] = null; // 4.
-                gameBoard[fromY][fromX].setHoldingGem(false); // 5.
-                gameBoard[toY][toX].setHoldingGem(true); // 6.
-                currentTurn++;                          // 7.
-                isPlayerOneActive = !isPlayerOneActive; // 7. (also)
+                heldGemPositions[toY][toX] = heldGemPositions[fromY][fromX]; // 4.
+                heldGemPositions[fromY][fromX] = null; // 5.
+                gameBoard[fromY][fromX].setHoldingGem(false); // 6.
+                gameBoard[toY][toX].setHoldingGem(true); // 7.
+                currentTurn++;                          // 8.
+                isPlayerOneActive = !isPlayerOneActive; // 8. (also)
                 validMovePerformed = true;
+                System.out.printf("Passed gem from (%d, %d) to (%d, %d).%n", fromX, fromY, toX, toY);
             }
         }
         else
         {
             System.out.println("You can't throw a gem to your opponent!");
         }
-        System.out.printf("Passed gem from (%d, %d) to (%d, %d).%n", fromX, fromY, toX, toY);
         if(validMovePerformed) {
             System.out.println();
             printBoard(); // print the new board state at the very end of the move
