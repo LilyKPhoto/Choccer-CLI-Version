@@ -11,6 +11,9 @@ public class Main {
         Scanner key = new Scanner(System.in);
 
         System.out.println("Welcome to Choccer!");
+        // constant player names for testing purposes
+        // player1Name = "P1";
+        // player2Name = "P2";
         System.out.print("Player 1, what's your name? "); // figure i may as well ask the players what their names are for a bit more personalization
         player1Name = key.nextLine();
         System.out.printf("Hello, %s! Your pieces are the black ones (which are the solid ones on the *right* side of the board. They'll look white if you're using dark mode on your CLI.)%n", player1Name);
@@ -20,11 +23,11 @@ public class Main {
         System.out.printf("Hello, %s! Your pieces are the white ones (which are the hollow ones on the *left* side of the board. They'll look black if you're using dark mode on your CLI.)%n", player2Name);
         Board gameBoard = new Board(player1Name, player2Name);
         gameBoard.printBoard();
-        int fromX = 0, fromY = 0, toX = 0, toY = 0;
+        int fromX, fromY, toX, toY;
         // play for up to the max number of turns
         while (gameBoard.getCurrentTurn() <= Board.BOARD_MAX_TURNS && !gameBoard.getGameState()) {
             System.out.print("Select piece (x y): ");
-            fromX = key.nextInt();
+            fromX = gameBoard.charToInt(key.next());
             fromY = key.nextInt();
             key.nextLine(); // clear buffer
             try {
@@ -33,7 +36,7 @@ public class Main {
                     char wantToThrowGem = key.nextLine().charAt(0);
                     if (Character.toLowerCase(wantToThrowGem) == 'y') {
                         System.out.print("Throw to? (x y): ");
-                        toX = key.nextInt();
+                        toX = gameBoard.charToInt(key.next());
                         toY = key.nextInt();
                         key.nextLine(); // clear buffer
                         gameBoard.passGem(fromX, fromY, toX, toY);
@@ -45,14 +48,18 @@ public class Main {
                 System.out.println("Error: cannot select empty space.");
                 continue;
             }
+            catch (ArrayIndexOutOfBoundsException aioobe) {
+                System.out.println("Error: Attempted to select an out-of-bounds space. Did you swap your row and column values?");
+                continue;
+            }
             System.out.print("Move to? (x y): ");
-            toX = key.nextInt();
+            toX = gameBoard.charToInt(key.next());
             toY = key.nextInt();
             key.nextLine(); // clear buffer
             try {
                 gameBoard.movePiece(fromX, fromY, toX, toY);
             } catch (ArrayIndexOutOfBoundsException aioobe) {
-                System.out.println("Did you swap your x and y values?");
+                System.out.println("Error: Attempted to select an out-of-bounds space. Did you swap your row and column values?");
             }
         }
         if(gameBoard.getPlayerOnePoints() > gameBoard.getPlayerTwoPoints()) {

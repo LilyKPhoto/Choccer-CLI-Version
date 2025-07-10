@@ -177,18 +177,18 @@ public class Board
                     if (heldGemPositions[i][j] instanceof BlueGem) {
                         // if player 1 is holding it:
                         if(gameBoard[i][j].getColor()) {
-                            System.out.printf("%s is holding a Blue Gem at (%d, %d).%n", player1Name, j, i);
+                            System.out.printf("%s is holding a Blue Gem at (%c, %d).%n", player1Name, intToChar(j), i);
                         }
                         else {
-                            System.out.printf("%s is holding a Blue Gem at (%d, %d).%n", player2Name, j, i);
+                            System.out.printf("%s is holding a Blue Gem at (%c, %d).%n", player2Name, intToChar(j), i);
                         }
                     }
                     if (heldGemPositions[i][j] instanceof RedGem) {
                         if(gameBoard[i][j].getColor()) {
-                            System.out.printf("%s is holding the Red Gem at (%d, %d).%n", player1Name, j, i);
+                            System.out.printf("%s is holding the Red Gem at (%c, %d).%n", player1Name, intToChar(j), i);
                         }
                         else {
-                            System.out.printf("%s is holding the Red Gem at (%d, %d).%n", player2Name, j, i);
+                            System.out.printf("%s is holding the Red Gem at (%c, %d).%n", player2Name, intToChar(j), i);
                         }
                     }
                 }
@@ -196,6 +196,28 @@ public class Board
         }
     }
 
+    /**
+     * Helper method for movePiece and passGem. takes in an int and converts it to a char.
+     * Note that no actual error checking is performed. That gets performed by movePiece/passGem.
+     * @param i an int to convert to a char
+     * @return int + 65, casted to a char (0 -> A, 1 -> B, etc)
+     */
+    public int intToChar(int i)
+    {
+        return (char)(i + 65);
+    }
+
+    /**
+     * Helper method for movePiece and passGem. takes in a String, takes in the first char and returns an int from 0-10.
+     * Note that no actual error checking is performed. That gets performed by movePiece/passGem.
+     * @param s a String to convert to an int
+     * @return (the ASCII value of the first char) - 65 (A -> 0, B -> 1, etc)
+     */
+    public int charToInt(String s)
+    {
+        char temp = Character.toUpperCase(s.charAt(0));
+        return (((int) temp) - 65); // A is 65, B is 66, etc., so subtracting 65 from A gives 0, B gives 1, etc.
+    }
     /**
      * Attempts to move a Piece on the gameBoard from (fromX, fromY) to (toX, toY).
      * @param fromX the original x coord
