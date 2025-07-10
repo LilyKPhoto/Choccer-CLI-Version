@@ -2,14 +2,23 @@ import java.util.Scanner;
 
 /**
  * Driver program for the game
- * uh rules go here and stuff idk
+ * rules are in the readme
  */
 public class Main {
     public static void main(String[] args) {
         // who up writing they code
-        System.out.println("Welcome to Choccer!");
+        String player1Name, player2Name;
         Scanner key = new Scanner(System.in);
-        Board gameBoard = new Board();
+
+        System.out.println("Welcome to Choccer!");
+        System.out.print("Player 1, what's your name? "); // figure i may as well ask the players what their names are for a bit more personalization
+        player1Name = key.nextLine();
+        System.out.printf("Hello, %s! Your pieces are the black ones (which are the solid ones on the *right* side of the board. They'll look white if you're using dark mode on your CLI.)%n", player1Name);
+
+        System.out.print("Player 2, what's your name? ");
+        player2Name = key.nextLine();
+        System.out.printf("Hello, %s! Your pieces are the white ones (which are the hollow ones on the *left* side of the board. They'll look black if you're using dark mode on your CLI.)%n", player2Name);
+        Board gameBoard = new Board(player1Name, player2Name);
         gameBoard.printBoard();
         int fromX = 0, fromY = 0, toX = 0, toY = 0;
         // play for up to the max number of turns

@@ -17,22 +17,34 @@ public class Board
     public static final int BOARD_MAX_Y = 6;
     public static final int BOARD_MAX_TURNS = 100;
 
+    public static final String DEFAULT_PLAYER_1_NAME = "Player 1";
+    public static final String DEFAULT_PLAYER_2_NAME = "Player 2";
+
     // player variables:
+    private String player1Name, player2Name;
     private int currentTurn = 1; // 100 turns total
     private int playerOnePoints = 0; // player 1 point total
     private int playerTwoPoints = 0; // player 2 point total
     private boolean isPlayerOneActive = true; // is it player 1's turn? true = yes, false = no.
 
-
+    // game board variables:
     private final Piece[][] gameBoard = new Piece[7][11];
     private final GemPiece[][] heldGemPositions = new GemPiece[7][11]; // GemPieces should be moved here if they get held.
     private int numCaptured = 0;
     private final Piece[] capturedPieces = new Piece[22];
 
+    // game state variables
     private boolean isGameOver = false; // moving a RedGem to a goal zone should end the game immediately.
 
     public Board() {
         initializeGameBoard();
+    }
+
+    public Board(String p1, String p2)
+    {
+        initializeGameBoard();
+        player1Name = p1;
+        player2Name = p2;
     }
 
     /**
@@ -85,12 +97,13 @@ public class Board
     public void printBoard() {
         // print the current turn:
         System.out.printf("Current Turn: %d/%d%n", currentTurn, Board.BOARD_MAX_TURNS);
-        System.out.printf("Player 1 has %d points.%n", playerOnePoints);
-        System.out.printf("Player 2 has %d points.%n", playerTwoPoints);
+
+        System.out.printf("%s has %d points.%n", player1Name, playerOnePoints);
+        System.out.printf("%s has %d points.%n", player2Name, playerTwoPoints);
         if (isPlayerOneActive) {
-            System.out.println("It's Player 1's turn!");
+            System.out.printf("It's %s's turn!%n", player1Name);
         } else {
-            System.out.println("It's player 2's turn!");
+            System.out.printf("It's %s's turn!%n", player2Name);
         }
         // print the top row:
         System.out.println("  ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐");
@@ -150,15 +163,26 @@ public class Board
             }
             System.out.println();
         }
-        // finally, print the status of any held gems:
+        // finally, print the status of any held gems, including who is holding them:
         for (int i = 0; i < heldGemPositions.length; i++) {
             for (int j = 0; j < heldGemPositions[i].length; j++) {
                 if (heldGemPositions[i][j] != null) {
                     if (heldGemPositions[i][j] instanceof BlueGem) {
-                        System.out.printf("There is a Blue Gem being held at (%d, %d).%n", j, i);
+                        // if player 1 is holding it:
+                        if(gameBoard[i][j].getColor()) {
+                            System.out.printf("%s is holding a Blue Gem at (%d, %d).%n", player1Name, j, i);
+                        }
+                        else {
+                            System.out.printf("%s is holding a Blue Gem at (%d, %d).%n", player2Name, j, i);
+                        }
                     }
                     if (heldGemPositions[i][j] instanceof RedGem) {
-                        System.out.printf("The Red Gem is being held at (%d, %d).%n", j, i);
+                        if(gameBoard[i][j].getColor()) {
+                            System.out.printf("%s is holding the Red Gem at (%d, %d).%n", player1Name, j, i);
+                        }
+                        else {
+                            System.out.printf("%s is holding the Red Gem at (%d, %d).%n", player2Name, j, i);
+                        }
                     }
                 }
             }
@@ -442,8 +466,7 @@ public class Board
     public int getPlayerTwoPoints() {
         return this.playerTwoPoints;
     }
-    public boolean getGameState()
-    {
+    public boolean getGameState() {
         return this.isGameOver;
     }
 }
