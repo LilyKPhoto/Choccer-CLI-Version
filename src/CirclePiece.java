@@ -18,7 +18,7 @@ public class CirclePiece extends Piece
      *
      * @param newX the new x position to move to.
      * @param newY the new y position to move to.
-     * @return
+     * @return false, always. A CirclePiece cannot be scored or end the game.
      * @throws MovementException if the attempted move is illegal.
      */
     @Override

@@ -1,4 +1,4 @@
-/** A Star Piece is a type of Piece. It can move diagonally by one space. */
+/** A Star Piece is a type of Piece. It can move diagonally by up to 3 spaces. */
 
 public class StarPiece extends Piece
 {
@@ -15,7 +15,7 @@ public class StarPiece extends Piece
      *
      * @param newX the new x position to move to.
      * @param newY the new y position to move to.
-     * @return
+     * @return false, always. A StarPiece cannot be scored or end the game.
      * @throws MovementException if the attempted move is illegal.
      */
     @Override
@@ -53,8 +53,8 @@ public class StarPiece extends Piece
         return false; // needed to keep compiler happy, doesn't actually do anything useful
     }
     /**
-     * Returns a triangle in the appropriate color.
-     * @return either △ or ▲ depending on the color of the calling TrianglePiece.
+     * Returns a Star in the appropriate color.
+     * @return either ☆ or ★ depending on the color of the calling TrianglePiece.
      */
     @Override
     public String toString()
