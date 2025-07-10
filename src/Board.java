@@ -109,14 +109,14 @@ public class Board
             System.out.printf("It's %s's turn!%n", player2Name);
         }
         // print the top row:
-        System.out.println("  ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐");
-        System.out.println("  │ 0 │ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 10│");
-        System.out.println("──┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┤");
+        System.out.println("    ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐");
+        System.out.println("    │ A │ B │ C │ D │ E │ F │ G │ H │ I │ J │ K │");
+        System.out.println("┌───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┐");
         // print the game board:
         for (int i = 0; i < gameBoard.length; i++) {
-            System.out.print(i);
+            System.out.print("│ " + i);
             for (int j = 0; j < gameBoard[i].length; j++) {
-                if((i >=2 && i <= 4) && (j <= 2 || j >= 8)) {
+                if((i >= 2 && i <= 4) && (j <= 2 || j > 8)) {
                     System.out.print(" ┃");
                 }
                 else {
@@ -127,33 +127,37 @@ public class Board
                 } else {
                     System.out.print(" " + gameBoard[i][j]);
                 }
-            }
+            } // end of inner for loop
             if(i >= 2 && i <= 4) {
-                System.out.print(" ┃");
+                System.out.print(" ┃ " + i + " │");
             }
             else {
-                System.out.print(" │");
+                System.out.print(" │ " + i + " │");
             }
             System.out.println();
             if(i == 1)
             {
-                System.out.println("──┢━━━╈━━━╅───┼───┼───┼───┼───┼───┼───┢━━━╈━━━┧");
+                System.out.println("├───╆━━━╈━━━╅───┼───┼───┼───┼───┼───┼───┢━━━╈━━━╅───┤");
             }
             else if(i >= 2 && i <= 3)
             {
-                System.out.println("──╊━━━╋━━━╉───┼───┼───┼───┼───┼───┼───╊━━━╋━━━┫");
+                System.out.println("├───╊━━━╋━━━╉───┼───┼───┼───┼───┼───┼───╊━━━╋━━━╉───┤");
             }
             else if(i == 4)
             {
-                System.out.println("──┡━━━╇━━━╃───┼───┼───┼───┼───┼───┼───┡━━━╇━━━┦");
+                System.out.println("├───╄━━━╇━━━╃───┼───┼───┼───┼───┼───┼───┡━━━╇━━━╃───┤");
             }
-            else
+            else if(i == 0 || i == 5)
             {
-                System.out.println("──┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┤");
+                System.out.println("├───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┤");
             }
-        }
-        System.out.println("  │ 0 │ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 10│");
-        System.out.println("  └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘");
+            else if (i == 6)
+            {
+                System.out.println("└───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┘");
+            }
+        } // end of outer for loop
+        System.out.println("    │ A │ B │ C │ D │ E │ F │ G │ H │ I │ J │ K │");
+        System.out.println("    └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘");
         // now print the captured pieces, only if any pieces have been captured:
         if (capturedPieces[0] != null) {
             System.out.print("Captured Pieces: ");
