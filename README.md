@@ -3,4 +3,6 @@
 The game was created by Nataly Lavender and programmed by Lily Kaplan.
 
 # Rules
-![circle](/resources/circle.png)
+## Scoring
+
+![circle](/resources/circle.png) ![triangle](/resources/triangle.png) Circles and Triangles net 1 point per capture
