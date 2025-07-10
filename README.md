@@ -1,7 +1,7 @@
 # Welcome to Choccer!
 The game was created by Nataly Lavender and programmed by Lily Kaplan.
 
-NOTE: THIS README IS A WORK IN PROGRESS
+NOTE: THIS README (and the whole project) IS A WORK IN PROGRESS
 
 ![the starting board layout](/resources/starting%20board.png)
 
@@ -59,4 +59,4 @@ The red gem is worth 10 points when scored. It also immediately ends the game wh
 
 ![board](/resources/board.png)
 
-This is the game board. To score a gem, a piece 
+This is the game board. To score a gem, it must be moved into the opposing capture zone (marked by the white and black zones on either side of the board).
