@@ -7,7 +7,6 @@
  * Full game rules can be found in the README.
  */
 
-// TODO: change either the rows or columns to be letters instead of numbers
 public class Board
 {
     // board is 11 spaces wide by 7 spaces high (11x7), so max values should be 10 and 6 
